@@ -1,18 +1,19 @@
 from coins import Coin
 
-class Wallet:
+class Wallet(Coin):
     def __init__(self):
-        self.money = Coin()
-        self.fill_wallet()
+        self.money = []
+        self.fill_wallet() 
 
 
-def fill_wallet(self):
-    """Method will fill wallet's money list with certain amount of each type of coin when called."""
-    for index in range(8):
-        self.money.append(Coin.Quarter())
-    for index in range(10):
-        self.money.append(Coin.Dime())
-    for index in range(20):
-        self.money.append(Coin.Nickel())
-    for index in range(50):
-        self.money.append(Coin.Penny())
+    def fill_wallet(self):
+        """Method will fill wallet's money list with certain amount of each type of coin when called."""
+        index1 = Coin(8)
+        index2 = Coin(10)
+        index3 = Coin(20)
+        index4 = Coin(50)
+        
+        self.money.append(index1)
+        self.money.append(index2)
+        self.money.append(index3)
+        self.money.append(index4)
