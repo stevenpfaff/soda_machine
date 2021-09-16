@@ -8,6 +8,7 @@ from cans import Can
 from cans import RootBeer
 from cans import OrangeSoda
 from cans import Cola
+from customer import Customer
 
 class SodaMachine:
     def __init__(self):
@@ -16,23 +17,23 @@ class SodaMachine:
 
     def fill_register(self):
         """Method will fill SodaMachine's register with certain amounts of each coin when called."""
-        for Quarter() in range(8):
-            self.register.append(Quarter())
-        for Dime() in range(10):
-            self.register.append(Dime())
-        for Nickel() in range(20):
-            self.register.append(Nickel())
-        for Penny() in range(50):
-            self.register.append(Penny())
+        for index in range(8):
+            self.register.append(Quarter(index))
+        for index in range(10):
+            self.register.append(Dime(index))
+        for index in range(20):
+            self.register.append(Nickel(index))
+        for index in range(50):
+            self.register.append(Penny(index))
 
     def fill_inventory(self):
         """Method will fill SodaMachine's cans list with certain amounts of each can when called."""
-        for Cola() in range(10):
-            self.inventory.append(Cola())
-        for OrangeSoda() in range(10):
-            self.inventory.append(OrangeSoda())
-        for RootBeer() in range(10):
-            self.inventory.append(RootBeer())
+        for index in range(10):
+            self.inventory.append(Cola(index))
+        for index in range(10):
+            self.inventory.append(OrangeSoda(index))
+        for index in range(10):
+            self.inventory.append(RootBeer(index))
 
     def begin_transaction(self, customer):
         """Method is complete. Initiates purchase if user decides to proceed. No errors."""
@@ -46,7 +47,7 @@ class SodaMachine:
 
         selected_soda = self.get_inventory_soda(selected_soda_name)
 
-        customer_payment = customer.gather_coins_from_wallet(selected_soda_name)
+        customer_payment = Customer().gather_coins_from_wallet(selected_soda_name)
 
         self.calculate_transaction(customer_payment, selected_soda_name, customer)
 
@@ -59,20 +60,20 @@ class SodaMachine:
             customer_change = self.gather_change_from_register(change_value)
             if customer_change is None:
                 user_interface.output_text('Dispensing ${total_payment_value} back to customer')
-                customer.add_coins_to_wallet(customer_payment)
+                Customer().add_coins_to_wallet(customer_payment)
                 self.return_inventory(selected_soda)
             else:
                 self.deposit_coins_into_register(customer_payment)
-                customer.add_coins_to_wallet(customer_change)
-                customer.add_can_to_backpack(selected_soda)
+                Customer().add_coins_to_wallet(customer_change)
+                Customer().add_can_to_backpack(selected_soda)
                 user_interface.end_message(selected_soda, change_value)
         elif total_payment_value == selected_soda.price:
             self.deposit_coins_into_register(customer_payment)
-            customer.add_can_to_backpack(selected_soda)
+            Customer().add_can_to_backpack(selected_soda)
             user_interface.end_message(selected_soda, 0)
         else:
             user_interface.output_text("You do not have enough money to purchase this item, returning payment")
-            customer.add_coins_to_wallet(customer_payment)
+            Customer().add_coins_to_wallet(customer_payment)
             self.return_inventory(selected_soda)
 
     def gather_change_from_register(self, change_value):
