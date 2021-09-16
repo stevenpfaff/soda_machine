@@ -49,19 +49,19 @@ class Customer:
             total_value += coin.value
             if coin.name == "Quarter":
                 coins_quantity[0] += 1
-            elif coin.name == "dime":
+            elif coin.name == "Dime":
                 coins_quantity[1] += 1
             elif coin.name == "Nickel":
                 coins_quantity[2] += 1
             elif coin.name == "Penny":
                 coins_quantity[3] += 1
-        total_value = round(self.total_value, 2)
+        total_value = round(total_value, 2)
         user_interface.display_customer_wallet_info(coins_quantity, total_value)
 
-    def check_backpack():
+    def check_backpack(self):
         """Will display the cans contained in purchased_cans list in backpack"""
-        if Backpack.purchased_cans.length > 0:
+        if len(self.backpack.purchased_cans) == 0:
             user_interface.output_text("You have no cans in your backpack")
         else:
-            for can in Backpack.purchased_cans:
+            for can in self.backpack.purchased_cans:
                 user_interface.output_text(can.name)
